@@ -1,6 +1,7 @@
 import Container from './components/Container';
 import GlobalStyle from './components/GlobalStyle';
 import Header from './components/header/Header';
+import TodoForm from './components/todoForm/todoForm';
 
 function App() {
   return (
@@ -8,6 +9,7 @@ function App() {
       <GlobalStyle />
       <Container>
         <Header />
+        <TodoForm />
       </Container>
     </>
   );
