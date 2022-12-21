@@ -1,11 +1,17 @@
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import TodoItem from '../todoItem/TodoItem';
 import { TodoListWrap, TodoTitle, List } from './style';
+import { __getTodos } from '../../redux/modules/todoSlice';
 
 const TodoList = ({ isActive }) => {
-  const todos = [
-    { id: 1, title: '제목입니다', content: '내용입니다', isDone: true },
-    { id: 2, title: '제목입니다2', content: '내용입니다2', isDone: false },
-  ];
+  const { todos } = useSelector((state) => state.todos);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(__getTodos());
+    console.log(todos);
+  }, [dispatch]);
 
   // isActive에 따라 진행중, 완료중 나누어 렌더링
   return (
