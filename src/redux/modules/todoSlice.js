@@ -34,6 +34,15 @@ export const __deleteTodos = createAsyncThunk('removeTodos', async (payload, thu
   }
 });
 
+export const __toggleDone = createAsyncThunk('toggleDone', async (payload, thunkAPI) => {
+  try {
+    await axios.patch(`http://localhost:3001/todos/${payload.id}`);
+    return thunkAPI.fulfillWithValue(payload.id);
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
 // 리듀서
 const todoSlice = createSlice({
   name: 'todos',
@@ -60,6 +69,17 @@ const todoSlice = createSlice({
     },
     [__deleteTodos.fulfilled]: (state, action) => {
       const newTodos = state.todos.filter((todo) => todo.id !== action.payload);
+      state.todos = newTodos;
+    },
+    [__toggleDone.fulfilled]: (state, action) => {
+      const newTodos = state.todos.map((todo) => {
+        return todo.id === action.payload
+          ? {
+              ...todo,
+              isDone: !todo.isDone,
+            }
+          : todo;
+      });
       state.todos = newTodos;
     },
   },
