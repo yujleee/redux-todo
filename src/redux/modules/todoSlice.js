@@ -15,11 +15,24 @@ export const __getTodos = createAsyncThunk('getTodos', async (payload, thunkAPI)
   }
 });
 
+export const __addTodos = createAsyncThunk('addTodos', async (payload, thunkAPI) => {
+  try {
+    const response = await axios.post('http://localhost:3001/todos', payload);
+    return thunkAPI.fulfillWithValue(response.data);
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
 // 리듀서
 const todoSlice = createSlice({
   name: 'todos',
   initialState,
-  reducers: {},
+  reducers: {
+    addTodo: (state, action) => {
+      return [...state, action.payload];
+    },
+  },
   extraReducers: {
     [__getTodos.pending]: (state) => {
       state.isLoading = true;
@@ -32,8 +45,11 @@ const todoSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    [__addTodos.fulfilled]: (state, action) => {
+      state.todos = [...state.todos, action.payload];
+    },
   },
 });
 
-export const {} = todoSlice.actions;
+export const { addTodo } = todoSlice.actions;
 export default todoSlice.reducer;
