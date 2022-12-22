@@ -8,7 +8,6 @@ let initialState = { todos: [] };
 export const __getTodos = createAsyncThunk('getTodos', async (payload, thunkAPI) => {
   try {
     const response = await axios.get('http://localhost:3001/todos');
-    console.log('data', response);
     return thunkAPI.fulfillWithValue(response.data);
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
@@ -26,7 +25,6 @@ export const __addTodos = createAsyncThunk('addTodos', async (payload, thunkAPI)
 
 export const __deleteTodos = createAsyncThunk('removeTodos', async (payload, thunkAPI) => {
   try {
-    console.log('payload', payload.id);
     await axios.delete(`http://localhost:3001/todos/${payload.id}`);
     return thunkAPI.fulfillWithValue(payload.id);
   } catch (error) {
@@ -47,11 +45,7 @@ export const __toggleDone = createAsyncThunk('toggleDone', async (payload, thunk
 const todoSlice = createSlice({
   name: 'todos',
   initialState,
-  reducers: {
-    addTodo: (state, action) => {
-      return [...state, action.payload];
-    },
-  },
+  reducers: {},
   extraReducers: {
     [__getTodos.pending]: (state) => {
       state.isLoading = true;
@@ -85,5 +79,4 @@ const todoSlice = createSlice({
   },
 });
 
-export const { addTodo } = todoSlice.actions;
 export default todoSlice.reducer;
