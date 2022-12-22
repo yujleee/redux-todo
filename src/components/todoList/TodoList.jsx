@@ -10,7 +10,6 @@ const TodoList = ({ isActive }) => {
 
   useEffect(() => {
     dispatch(__getTodos());
-    console.log(todos);
   }, [dispatch]);
 
   // isActive에 따라 진행중, 완료중 나누어 렌더링

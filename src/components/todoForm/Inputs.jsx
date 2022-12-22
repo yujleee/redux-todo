@@ -1,6 +1,6 @@
 import { Label, Input } from './style';
 
-const Inputs = ({ label, id, value, onChange, ref }) => {
+const Inputs = ({ label, id, value, onChange }) => {
   return (
     <>
       <Label htmlFor={id}>{label}</Label>
@@ -11,7 +11,6 @@ const Inputs = ({ label, id, value, onChange, ref }) => {
         id={id}
         value={value}
         onChange={onChange}
-        ref={ref}
       />
     </>
   );
