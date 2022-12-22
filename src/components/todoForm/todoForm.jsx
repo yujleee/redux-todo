@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 import Inputs from './Inputs';
@@ -9,8 +9,7 @@ import { __addTodos } from '../../redux/modules/todoSlice';
 const TodoForm = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const titleInput = useRef();
-  const contentInput = useRef();
+
   const dispatch = useDispatch();
 
   // 제목 입력값 상태 변화
@@ -31,10 +30,8 @@ const TodoForm = () => {
     if (!title || !content) {
       if (!title) {
         alert('제목을 입력해주세요.');
-        titleInput.current.focus();
       } else {
         alert('내용을 입력해주세요.');
-        contentInput.current.focus();
       }
 
       return false;
@@ -58,8 +55,8 @@ const TodoForm = () => {
     <FormWrap>
       <HiddenTitle>투두 입력</HiddenTitle>
       <form onSubmit={submitHandler}>
-        <Inputs label={'제목'} id={'title'} value={title} onChange={changeTitleHandler} ref={titleInput} />
-        <Inputs label={'내용'} id={'contents'} value={content} onChange={changeContentHandler} ref={contentInput} />
+        <Inputs label={'제목'} id={'title'} value={title} onChange={changeTitleHandler} />
+        <Inputs label={'내용'} id={'contents'} value={content} onChange={changeContentHandler} />
         <Button type="submit">추가</Button>
       </form>
     </FormWrap>
